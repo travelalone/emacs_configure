@@ -12,8 +12,8 @@
 			   exec-path-from-shell
 			   popwin
 			   reveal-in-osx-finder
-			   auctex-latexmk
-                           zenburn-theme
+               auctex
+               zenburn-theme
 			   cdlatex
 			   latex-math-preview
 			   latex-extra
@@ -59,18 +59,19 @@
 (add-hook 'LaTeX-mode-hook(lambda()(company-mode 0)))
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
-(setq-default TeX-master nil)
-(load "auctex.el" nil t t)
-;;(load "preview-latex.el" nil t t)
 (add-hook 'LaTeX-mode-hook 'turn-on-cdlatex)
 (load "latex-math-preview.el" nil t t)
-(setq-default TeX-engine 'lualatex)
- (autoload 'latex-math-preview-expression "latex-math-preview" nil t)
-  (autoload 'latex-math-preview-insert-symbol "latex-math-preview" nil t)
-  (autoload 'latex-math-preview-save-image-file "latex-math-preview" nil t)
+(add-hook 'LateX-mode-hook(lambda()
+			    (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+			    (setq TeX-command-default "XeLaTeX")
+			    ))
+(autoload 'latex-math-preview-expression "latex-math-preview" nil t)
+(autoload 'latex-math-preview-insert-symbol "latex-math-preview" nil t)
+(autoload 'latex-math-preview-save-image-file "latex-math-preview" nil t)
 (autoload 'latex-math-preview-beamer-frame "latex-math-preview" nil t)
 (add-hook 'LaTeX-mode-hook #'latex-extra-mode)
 (add-hook 'LaTeX-mode-hook (lambda ()
                              (TeX-fold-mode 1)))
 (setq TeX-fold-command-prefix "\C-o")
+
 (provide 'init-packages)
