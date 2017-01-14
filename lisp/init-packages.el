@@ -12,12 +12,17 @@
 			   exec-path-from-shell
 			   popwin
 			   reveal-in-osx-finder
-               auctex
-               zenburn-theme
+			   auctex
+			   zenburn-theme
 			   cdlatex
 			   latex-math-preview
 			   latex-extra
 			   which-key
+			   markdown-mode
+			   gh-md
+			   flycheck
+			   auto-complete
+			   ac-ispell
 			   ) "Default packages")
 
 (setq package-selected-packages haomiao/packages)
@@ -49,9 +54,10 @@
 
 ;;(load-theme 'monokai t)
 (load-theme 'zenburn t)
-
+(ac-config-default)
 (require 'popwin)
 (popwin-mode t)
+
 
 (require 'which-key)
 (which-key-mode t)
@@ -74,4 +80,14 @@
                              (TeX-fold-mode 1)))
 (setq TeX-fold-command-prefix "\C-o")
 
+(custom-set-variables
+  '(ac-ispell-requires 4)
+  '(ac-ispell-fuzzy-limit 2))
+
+(eval-after-load "auto-complete"
+  '(progn
+      (ac-ispell-setup)))
+(add-hook 'LaTeX-mode-hook 'ac-ispell-ac-setup)
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
 (provide 'init-packages)
